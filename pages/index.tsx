@@ -13,19 +13,8 @@ export const getServerSideProps: GetServerSideProps<
 > = async () => {
   try {
     await clientPromise;
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-    const mongoUser = 'none'//process.env.MONGODB_USER
-    const mongoPass = 'none'//process.env.MONGODB_PASS
-
     return {
-      props: { isConnected: true, mongoUser, mongoPass}, // mongoUser, mongoPass
+      props: { isConnected: true}, // mongoUser, mongoPass
     };
   } catch (e) {
     console.error(e);
@@ -37,8 +26,7 @@ export const getServerSideProps: GetServerSideProps<
 
 export default function Home({
   isConnected,
-  mongoUser,
-  mongoPass
+
 }: InferGetServerSidePropsType<typeof getServerSideProps>) { 
   return (
     <div className="container">
@@ -55,13 +43,12 @@ export default function Home({
         {isConnected ? (
           <div>
             <h2 className="subtitle">You are connected to MongoDB</h2>
-            <h2 className="subtitle">Username is: {mongoUser}</h2>
-            <h2 className="subtitle">Password is: {mongoPass}</h2>
+
           </div>
           
         ) : (
           <h2 className="subtitle">
-            You are NOT connected to MongoDB.
+            You are NOT connected to MongoDB. \n
           </h2>
         )}
 
