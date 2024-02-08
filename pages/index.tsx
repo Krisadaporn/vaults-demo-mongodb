@@ -48,7 +48,7 @@ export default function Home({
           
         ) : (
           <h2 className="subtitle">
-            You are NOT connected to MongoDB. \n
+            You are NOT connected to MongoDB. 
           </h2>
         )}
 

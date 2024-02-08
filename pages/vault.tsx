@@ -1,9 +1,18 @@
 // pages/VaultData.js
 
 import axios from 'axios';
+import { useState } from 'react';
 
-const VaultPages = ({ mongodbPass, mongodbUser, mongodbUri}) => {
-  return ( 
+
+export default function VaultData({ mongodbPass, mongodbUser, mongodbUri}){
+  // const [data, setData] =useState("");
+
+  // const vaultData = () => {
+  //   setData({mongodbUri})
+  //   console.log(setData({mongodbUri}))
+  // };
+
+  return (
     <div className='container'>
       <h1>Vault Data for illustration purpose</h1>
       <h3>MongoDB Password: {mongodbPass}</h3>
@@ -11,7 +20,18 @@ const VaultPages = ({ mongodbPass, mongodbUser, mongodbUri}) => {
       <h3>MongoDB URI: {mongodbUri}</h3> 
     </div>
   );
-};
+}
+
+// const VaultPages = ({ mongodbPass, mongodbUser, mongodbUri}) => {
+//   return ( 
+//     <div className='container'>
+//       <h1>Vault Data for illustration purpose</h1>
+//       <h3>MongoDB Password: {mongodbPass}</h3>
+//       <h3>MongoDB User: {mongodbUser}</h3>
+//       <h3>MongoDB URI: {mongodbUri}</h3> 
+//     </div>
+//   );
+// };
 
 export function GetMongodbURI(mongodbUser, mongodbPass){
   return {
@@ -41,7 +61,7 @@ export async function getServerSideProps() {
       throw new Error('MongoDB credentials not found in response');
     }
     const MONGODB_URI = GetMongodbURI(MONGODB_USER,MONGODB_PASS).props['mongodbURI']
-    console.log(MONGODB_URI)
+    // console.log(MONGODB_URI)
     return {
       props: {
         mongodbUser: MONGODB_USER,
@@ -61,4 +81,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default VaultPages;
+// export default VaultPages;
