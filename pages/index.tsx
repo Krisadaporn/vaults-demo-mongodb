@@ -4,6 +4,21 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import React from 'react';
 
 
+import getMongoDBSideProps from "../lib/vault"
+
+export async function fetchDataAndHandleProps(){
+  try {
+    const props = await getMongoDBSideProps();
+    // console.log(props)
+    const user = props['mongodbUser']
+    return user;
+  } catch (error) {
+    console.error('Error fetching and handling props:', error);
+    return null
+  }
+}
+
+
 type ConnectionStatus = {
   isConnected: boolean;
 };
@@ -13,8 +28,9 @@ export const getServerSideProps: GetServerSideProps<
 > = async () => {
   try {
     await clientPromise;
+    const mongodbUser = await fetchDataAndHandleProps();
     return {
-      props: { isConnected: true}, // mongoUser, mongoPass
+      props: { isConnected: true, mongodbUser}, // mongoUser, mongoPass
     };
   } catch (e) {
     console.error(e);
@@ -26,7 +42,7 @@ export const getServerSideProps: GetServerSideProps<
 
 export default function Home({
   isConnected,
-
+  mongodbUser,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) { 
   return (
     <div className="container">
@@ -43,13 +59,16 @@ export default function Home({
         {isConnected ? (
           <div>
             <h2 className="subtitle">You are connected to MongoDB</h2>
+            <h3>using user: {mongodbUser}</h3>
+            <h3>expiring in 20 seconds</h3>
 
           </div>
           
         ) : (
-          <h2 className="subtitle">
-            You are NOT connected to MongoDB. 
-          </h2>
+          <div>
+            <h2 className="subtitle">You are NOT connected to MongoDB.</h2>
+          </div>
+          
         )}
 
       </main>

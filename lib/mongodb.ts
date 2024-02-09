@@ -1,6 +1,19 @@
 import { MongoClient } from "mongodb";
+import getMongoDBSideProps from "./vault"
 
-const uri = 'mongodb+srv://vault-user1:AEZbIoWlVxbuPIW2@vaults-mongo.o2tlioo.mongodb.net/?retryWrites=true&w=majority';
+export async function fetchDataAndHandleProps(){
+  try {
+    const props = await getMongoDBSideProps();
+    // console.log(props)
+    const uri = props['mongodbUri']
+    return uri;
+  } catch (error) {
+    console.error('Error fetching and handling props:', error);
+    return null
+  }
+}
+
+const uri = await fetchDataAndHandleProps();
 
 if (!uri) {
   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
