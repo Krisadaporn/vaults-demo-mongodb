@@ -28,7 +28,7 @@ export async function getMongoDBSideProps() {
       }
     //   let MONGODB_USER = MONGODB_USER+'isNotConnected'
       const MONGODB_URI = GetMongodbURI(MONGODB_USER,MONGODB_PASS).props['mongodbURI']
-      // console.log(MONGODB_URI)
+      console.log(MONGODB_URI)
       return {
           mongodbUser: MONGODB_USER,
           mongodbPass: MONGODB_PASS,

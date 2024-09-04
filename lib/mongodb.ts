@@ -4,7 +4,7 @@ import getMongoDBSideProps from "./vault"
 export async function fetchDataAndHandleProps(){
   try {
     const props = await getMongoDBSideProps();
-    // console.log(props)
+    console.log(props)
     const uri = props['mongodbUri']
     return uri;
   } catch (error) {
