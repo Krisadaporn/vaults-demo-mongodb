@@ -1,13 +1,5 @@
 const mysql = require('mysql2');
 
-// Create a connection to the database
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'your_password',
-    database: 'your_database'
-});
-
 // The input username to be used in the query
 const username = 'someUsername';
 
